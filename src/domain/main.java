@@ -18,6 +18,7 @@ public class main {
             } else if (choice == 3){
                 shop.showPrice();
             }
+
         }
     }
 }

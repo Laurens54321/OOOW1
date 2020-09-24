@@ -7,3 +7,5 @@
 # Editor-based HTTP Client requests
 /httpRequests/
 /Week1.iml
+/out/
+/.idea/
