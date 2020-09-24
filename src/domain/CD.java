@@ -1,22 +1,21 @@
 package domain;
 
-public class Game extends Product{
-    public Game(String title, int ID) throws DomainException {
+public class CD extends Product {
+
+    public CD(String title, int ID) throws DomainException {
         super(title, ID);
     }
 
     @Override
     public double getPrice(int days) {
-        int price = 0;
-        price = days * 3;
-        return price;
+        return 1.5*days;
     }
 
     @Override
     public String toString() {
         return "Product{" +
                 "title='" + title + '\'' +
-                ", type='"+ "Game" + '\'' +
+                ", type='"+ "CD" + '\'' +
                 ", ID='" + ID + '\'' +
                 '}';
     }

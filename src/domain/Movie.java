@@ -1,7 +1,7 @@
 package domain;
 
 public class Movie extends Product{
-    public Movie(String title, String ID) throws DomainException {
+    public Movie(String title, int ID) throws DomainException {
         super(title, ID);
     }
 

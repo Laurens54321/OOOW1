@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public abstract class Product {
     protected String title;
-    protected String ID;
+    protected int ID;
 
-    public Product(String title, String ID) throws DomainException{
+    public Product(String title, int ID) throws DomainException{
         setTitle(title);
         setID(ID);
         System.out.println("New Product Added: " + title + ", " + ID);
@@ -17,12 +17,11 @@ public abstract class Product {
         else this.title = title;
     }
 
-    private void setID(String ID) throws DomainException{
-        if (ID.strip().isEmpty()) throw new DomainException("ID cannot be empty");
-        else this.ID = ID;
+    private void setID(int ID) throws DomainException{
+        this.ID = ID;
     }
 
-    public String getID(){
+    public int getID(){
         return ID;
     }
 
@@ -33,7 +32,7 @@ public abstract class Product {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return ID.equals(product.ID);
+        return ID == product.getID();
     }
 
     @Override
