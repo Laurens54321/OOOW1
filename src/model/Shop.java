@@ -9,50 +9,39 @@ public class Shop {
     public void Shop(){
     }
 
-    public void addProduct(){
-        String title = JOptionPane.showInputDialog("Enter the title:");
+    public void addProduct(String title, String type) throws DomainException{
         int id = productList.size();
-        String type = JOptionPane.showInputDialog("Enter the type (M for movie/G for game/C for CD):");
 
         switch(type){
             case "M":
-                try{
-                    Product p = new Movie(title, id);
-                    productList.add(p);
-                }
-                catch (DomainException e){
-                    System.out.println(e.getMessage());
-                }
+                Product p = new Movie(title, id);
+                productList.add(p);
                 break;
             case "G":
-                try{
-                    Product p = new Game(title, id);
-                    productList.add(p);
-                }
-                catch (DomainException e){
-                    System.out.println(e.getMessage());
-                }
+                Product pp = new Game(title, id);
+                productList.add(pp);
                 break;
             case "C":
-                try{
-                    Product p = new CD(title, id);
-                    productList.add(p);
-                }
-                catch (DomainException e){
-                    System.out.println(e.getMessage());
-                }
+                Product ppp = new CD(title, id);
+                productList.add(ppp);
                 break;
+            default:
+                throw new DomainException("Not a category");
         }
-
     }
 
-    public void showProduct(){
-        int id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id:"));
+    public String showProduct(int id){
         Product p  = searchDB(id);
-        JOptionPane.showMessageDialog(null, p.toString());
+        if (p == null) return null;
+        return p.toString();
     }
 
-    public void showInventory(){
+    public double showPrice(int id, int days){
+        Product p = searchDB(id);
+        return p.getPrice(days);
+    }
+
+    public String showInventory(){
         //Dit is echt de lelijkste shit ooit
         //pls refactor
         ArrayList<Product> out = new ArrayList<>();
@@ -71,24 +60,12 @@ public class Shop {
             outString += p.toString() + "\n";
         }
 
-        JOptionPane.showMessageDialog(null, outString);
+        return outString;
     }
 
-    public void showPrice(){
-        int id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id:"));
+    public boolean isIdAvailable(int id){
         Product p = searchDB(id);
-        String daysString = JOptionPane.showInputDialog("Enter the number of days:");
-        int days = Integer.parseInt(daysString);
-        JOptionPane.showMessageDialog(null, p.getPrice(days));
-    }
-
-    public void isIdAvailable(){
-        int id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id:"));
-        Product p = searchDB(id);
-        String s;
-        if (p.isLoaned()) s = "Product " + id + "is loaned out";
-        else s = "Product " + "is available";
-        JOptionPane.showMessageDialog(null, s);
+        return p.isLoaned();
     }
 
     private Product searchDB(int id){

@@ -1,5 +1,6 @@
 package view;
 
+import model.DomainException;
 import model.Shop;
 
 import javax.swing.*;
@@ -24,20 +25,61 @@ public class shopUI {
             choice = Integer.parseInt(choiceString);
             switch(choice) {
                 case (1):
-                    shop.addProduct();
+                    addProduct();
                     break;
                 case (2):
-                    shop.showProduct();
+                    showProduct();
                     break;
                 case (3):
-                    shop.showPrice();
+                    showPrice();
                     break;
                 case (4):
-                    shop.showInventory();
+                    showInventory();
                     break;
                 case (5):
-                    shop.isIdAvailable();
+                    isIdAvailable();
+                    break;
             }
         }
+    }
+
+    public void addProduct(){
+        String title = JOptionPane.showInputDialog("Enter the title:");
+        String type = JOptionPane.showInputDialog("Enter the type (M for movie/G for game/C for CD):");
+        try{
+            shop.addProduct(title, type);
+        } catch (DomainException errors){
+            JOptionPane.showMessageDialog(null, errors.getMessage());
+        }
+    }
+
+    private void showProduct(){
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id:"));
+        String s = shop.showProduct(id);
+        if (s == null) JOptionPane.showMessageDialog(null, "No products were found");
+        else JOptionPane.showMessageDialog(null, s);
+    }
+
+    private void showPrice(){
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id:"));
+        int days = Integer.parseInt(JOptionPane.showInputDialog("Enter the number of days:"));
+        if (days == 0){
+            JOptionPane.showMessageDialog(null, "Amount of days cannot be 0");
+        }
+        double s = shop.showPrice(id, days);
+        if (s == 0) JOptionPane.showMessageDialog(null, "No products were found");
+        else JOptionPane.showMessageDialog(null, "€" + s);
+    }
+
+    private void showInventory(){
+        JOptionPane.showMessageDialog(null, shop.showInventory());
+    }
+
+    private void isIdAvailable(){
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id:"));
+        boolean isAvailable = shop.isIdAvailable(id);
+        if (isAvailable) JOptionPane.showMessageDialog(null, "Product " + id + " is loaned out");
+        else JOptionPane.showMessageDialog(null,"Product " + id + " is available");
+
     }
 }
