@@ -1,14 +1,16 @@
-package domain;
+package model;
 
 import java.util.Objects;
 
 public abstract class Product {
     protected String title;
     protected int ID;
+    protected boolean isLoaned;
 
     public Product(String title, int ID) throws DomainException{
         setTitle(title);
         setID(ID);
+        isLoaned = false;
         System.out.println("New Product Added: " + title + ", " + ID);
     }
 
@@ -26,6 +28,14 @@ public abstract class Product {
     }
 
     public abstract double getPrice(int days);
+
+    public void setLoaned(boolean loaned) {
+        isLoaned = loaned;
+    }
+
+    public boolean isLoaned() {
+        return isLoaned;
+    }
 
     @Override
     public boolean equals(Object o) {

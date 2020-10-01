@@ -1,7 +1,6 @@
-package domain;
+package model;
 
 import javax.swing.*;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Shop {
@@ -49,15 +48,8 @@ public class Shop {
 
     public void showProduct(){
         int id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id:"));
-        ArrayList<Product> pl = searchDB(id);
-
-
-        if (!pl.isEmpty()){
-            for (Product p: pl) {
-                JOptionPane.showMessageDialog(null, p.toString());
-            }
-        }
-
+        Product p  = searchDB(id);
+        JOptionPane.showMessageDialog(null, p.toString());
     }
 
     public void showInventory(){
@@ -84,23 +76,26 @@ public class Shop {
 
     public void showPrice(){
         int id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id:"));
-        ArrayList<Product> pl = searchDB(id);
-
-        if (!pl.isEmpty()){
-            for (Product p: pl) {
-                String daysString = JOptionPane.showInputDialog("Enter the number of days:");
-                int days = Integer.parseInt(daysString);
-                JOptionPane.showMessageDialog(null, p.getPrice(days));
-            }
-        }
+        Product p = searchDB(id);
+        String daysString = JOptionPane.showInputDialog("Enter the number of days:");
+        int days = Integer.parseInt(daysString);
+        JOptionPane.showMessageDialog(null, p.getPrice(days));
     }
 
-    private ArrayList<Product> searchDB(int id){
-        ArrayList<Product> pl = new ArrayList<>();
+    public void isIdAvailable(){
+        int id = Integer.parseInt(JOptionPane.showInputDialog("Enter the id:"));
+        Product p = searchDB(id);
+        String s;
+        if (p.isLoaned()) s = "Product " + id + "is loaned out";
+        else s = "Product " + "is available";
+        JOptionPane.showMessageDialog(null, s);
+    }
+
+    private Product searchDB(int id){
         for (Product p: productList){
-            if (p.getID() == id) pl.add(p);
+            if (p.getID() == id) return p;
         }
-        return pl;
+        return null;
     }
 
 }

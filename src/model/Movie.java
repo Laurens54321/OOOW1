@@ -1,4 +1,4 @@
-package domain;
+package model;
 
 public class Movie extends Product{
     public Movie(String title, int ID) throws DomainException {
